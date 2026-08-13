@@ -153,3 +153,95 @@ Grafana should display the matching traces along with the trace timeline visuali
 - [ ] Tempo is configured as a Grafana data source.
 - [ ] Node Graph is enabled.
 - [ ] TraceQL query returns `order-service` traces.
+
+# 📊 Prometheus & Grafana Dashboard Setup
+
+## Step 3: Verify Prometheus Scraping Targets
+
+1. Open `http://localhost:9090/targets` in your web browser.
+2. You should see both `order-service` and `payment-service` listed with a green **UP** status.
+
+---
+
+## Step 4: Add Prometheus Data Source in Grafana
+
+1. Open Grafana at `http://localhost:3000`.
+2. Log in with:
+   - **Username:** `admin`
+   - **Password:** `admin`
+3. Go to **Connections** > **Data Sources** > **Add data source**.
+4. Select **Prometheus**.
+5. Set the **Prometheus server URL** to:
+
+```text
+http://prometheus:9090
+```
+
+6. Click **Save & Test**.
+7. A green success message should appear confirming the connection.
+
+---
+
+## Step 5: Import Out-of-the-Box Spring Boot Dashboard
+
+Instead of building charts manually from scratch, you can import a community dashboard built for Spring Boot.
+
+### Import Dashboard
+
+1. In Grafana, click the **`+` (Plus)** icon or open the **Dashboards** menu on the left.
+2. Click **Import**.
+3. In the **Import via grafana.com** text box, enter one of the following dashboard IDs:
+   - **`4701`** — Spring Boot dashboard
+   - **`11378`** — JVM Micrometer dashboard
+4. Click **Load**.
+5. Select your **Prometheus** data source from the bottom dropdown.
+6. Click **Import**.
+
+---
+
+## 📊 What You Will See in Grafana
+
+Once the dashboard is imported, it provides real-time visibility across your Spring Boot services.
+
+### JVM Metrics
+
+- **JVM Memory / Heap Usage** for both services.
+- **CPU Usage**.
+- **Live Thread Counts**.
+
+### HTTP Metrics
+
+- **HTTP Request Throughput**.
+- **HTTP Request Latency**.
+- Request metrics for endpoints such as:
+  - `/orders`
+  - `/payments`
+
+### 🔄 Service Switcher
+
+The dashboard provides a **Service Switcher Dropdown** using the `$application` variable at the top of the dashboard.
+
+You can use it to switch between:
+
+```text
+order-service
+payment-service
+```
+
+This allows you to monitor each Spring Boot service without creating a separate dashboard for every application.
+
+---
+
+## ✅ Verification Checklist
+
+- [ ] Prometheus is accessible at `http://localhost:9090`.
+- [ ] `order-service` appears as **UP** in Prometheus targets.
+- [ ] `payment-service` appears as **UP** in Prometheus targets.
+- [ ] Grafana is accessible at `http://localhost:3000`.
+- [ ] Prometheus is configured as a Grafana data source.
+- [ ] **Save & Test** succeeds.
+- [ ] Spring Boot dashboard is imported.
+- [ ] JVM memory metrics are visible.
+- [ ] CPU and thread metrics are visible.
+- [ ] HTTP throughput and latency metrics are visible.
+- [ ] `$application` service switcher works for `order-service` and `payment-service`.
