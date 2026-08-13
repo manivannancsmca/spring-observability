@@ -6,6 +6,9 @@ spring:
     name: payment-service
 
 management:
+  opentelemetry:
+    resource-attributes:
+      service.name: ${spring.application.name}
   endpoints:
     web:
       exposure:
