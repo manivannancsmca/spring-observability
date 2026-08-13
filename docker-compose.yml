@@ -69,7 +69,7 @@ services:
     image: grafana/grafana:latest
     container_name: grafana
     ports:
-      - "3000:3000"
+      - "3400:3000"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     networks:
