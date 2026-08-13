@@ -10,23 +10,23 @@ import org.springframework.web.client.RestClient;
 public class OrderController {
 
     private static final Logger log = LoggerFactory.getLogger(OrderController.class);
-    private final RestClient restClient;
+    private final RestClient paymentRestClient;
 
-    public OrderController(RestClient restClient) {
-        //this.restClient = restClientBuilder.baseUrl("http://payment-service:8082").build();
-        this.restClient = restClient;
+    // Inject the specific RestClient bean created in AppConfig
+    public OrderController(RestClient paymentRestClient) {
+        this.paymentRestClient = paymentRestClient;
     }
 
     @GetMapping("/create-order")
     public String createOrder() {
-        log.info("Processing order creation in Order Service...");
-        
-        String paymentResponse = restClient.get()
+        log.info("Processing order creation...");
+
+        String response = paymentRestClient.get()
                 .uri("/process-payment")
                 .retrieve()
                 .body(String.class);
 
-        log.info("Payment response received: {}", paymentResponse);
-        return "Order Completed -> " + paymentResponse;
+        log.info("Payment response: {}", response);
+        return "Order Completed -> " + response;
     }
 }
