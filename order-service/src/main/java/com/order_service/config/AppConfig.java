@@ -17,7 +17,7 @@ public class AppConfig {
     @Bean
     public RestClient paymentRestClient(RestClient.Builder builder) {
         return builder
-                .baseUrl("http://payment-service:8082")
+                .baseUrl("http://localhost:8082")
                 .build();
     }
 }
