@@ -8,8 +8,27 @@ distributor:
         http:
           endpoint: 0.0.0.0:4318
 
+# Enables internal indexing for service search & service graphs
+ingester:
+  trace_idle_period: 10s
+  max_block_duration: 5m
+
+metrics_generator:
+  registry:
+    external_labels:
+      source: tempo
+  storage:
+    path: /tmp/tempo/generator/wal
+
 storage:
   trace:
     backend: local
     local:
       path: /tmp/tempo/traces
+    wal:
+      path: /tmp/tempo/wal
+
+overrides:
+  defaults:
+    metrics_generator:
+      processors: [service-graphs, span-metrics]
