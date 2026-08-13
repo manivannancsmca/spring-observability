@@ -12,10 +12,9 @@ public class OrderController {
     private static final Logger log = LoggerFactory.getLogger(OrderController.class);
     private final RestClient restClient;
 
-    public OrderController(RestClient.Builder restClientBuilder) {
-        // RestClient inherits tracing context automatically from Builder
+    public OrderController(RestClient restClient) {
         //this.restClient = restClientBuilder.baseUrl("http://payment-service:8082").build();
-        this.restClient = restClientBuilder.baseUrl("http://localhost:8082").build();
+        this.restClient = restClient;
     }
 
     @GetMapping("/create-order")
