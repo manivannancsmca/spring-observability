@@ -12,14 +12,13 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, info, prometheus, metrics
+        include: "health,info,prometheus,metrics"
   metrics:
     distribution:
       percentiles-histogram:
         http.server.requests: true
     tags:
       application: ${spring.application.name}
-
   tracing:
     sampling:
       probability: 1.0
